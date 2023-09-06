@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-import 'element-plus/theme-chalk/el-message.css'
 
 const http = axios.create({
   baseURL: '/api',

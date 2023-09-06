@@ -12,17 +12,17 @@ import HomeClassification from './components/HomeClassification/HomeClassificati
     <div class="hospital">
       <el-row :gutter="10">
         <el-col :span="20">
-          <HomeClassification />
+          <HomeClassification/>
         </el-col>
         <el-col :span="4">
-          <div style="border-left: 1px solid red;height: 500px;">456</div>
+          <div style="border-left: 1px solid red; height: 500px">456</div>
         </el-col>
       </el-row>
     </div>
   </div>
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .home {
   width: 1200px;
   margin: 0 auto;

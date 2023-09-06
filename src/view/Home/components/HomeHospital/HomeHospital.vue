@@ -2,7 +2,14 @@
 import { Histogram, AlarmClock } from '@element-plus/icons-vue'
 import { pageAtt } from '@/types/home'
 import { getHomeHospitalAPI } from '@/apis/home'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
+
+// 获取父组件传来的值
+const props = defineProps<{
+  activeChoice: string
+  activeAddress: string
+}>()
 
 // 当前页面值
 const pages = ref<pageAtt>({
@@ -14,11 +21,10 @@ const pages = ref<pageAtt>({
 // 获取医院全部数据
 const homeHospitalList = ref<any>([])
 const getHomeHospital = async () => {
-  const res = await getHomeHospitalAPI(pages.value.currentPage, pages.value.pageSize)
+  const res = await getHomeHospitalAPI(pages.value.currentPage, pages.value.pageSize, props.activeChoice, props.activeAddress)
   homeHospitalList.value = res.data.content
   pages.value.total = res.data.totalElements
 }
-
 // 分页器页码发生变化
 const handleCurrentChange = (i: number) => {
   pages.value.currentPage = i
@@ -28,6 +34,12 @@ const handleSizeChange = (i: number) => {
   pages.value.pageSize = i
   getHomeHospital()
 }
+// 监听props值变化
+watch(props, () => getHomeHospital(), { deep: true })
+// 创建路由实例
+const router = useRouter()
+// 点击医院跳转对应的医院页面详情
+const onClickPage = (i: string) => router.push({ path: `/hospital/${i}` })
 
 onMounted(() => {
   getHomeHospital()
@@ -35,9 +47,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="hospital">
+  <div class="hospital" v-if="homeHospitalList.length">
     <div class="hospitalInfo">
-      <el-card class="box-card" v-for="item in homeHospitalList" :key="item.id" shadow="hover">
+      <el-card class="box-card" v-for="item in homeHospitalList" :key="item.id" shadow="hover" @click="onClickPage(item.hoscode)">
         <div class="info">
           <h2>{{ item?.hosname }}</h2>
           <div class="detail">
@@ -58,11 +70,12 @@ onMounted(() => {
         <img :src="`data:image/jpeg;base64,${item?.logoData}`" alt="" />
       </el-card>
     </div>
-    <div class="pages" v-if="homeHospitalList">
+    <div class="pages" v-if="homeHospitalList.length">
       <!-- 分页器 -->
       <el-pagination v-model:current-page="pages.currentPage" v-model:page-size="pages.pageSize" :page-sizes="[5, 10, 15, 20]" background layout="sizes, prev, pager, next, jumper,total" :total="pages.total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
   </div>
+  <el-empty description="暂无数据" :image-size="300" v-else />
 </template>
 
 <style scoped lang="scss">
@@ -78,6 +91,7 @@ onMounted(() => {
       width: 48%;
       margin-top: 20px;
       border: 0;
+      cursor: pointer;
       background: linear-gradient(to bottom, rgba(223, 249, 251, 0.4), rgba(245, 246, 250, 0.5));
 
       img {

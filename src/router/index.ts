@@ -5,7 +5,7 @@ export default createRouter({
   routes: [
     { path: '/', component: () => import('@/view/Home/Home.vue') },
     { path: '/home', component: () => import('@/view/Home/Home.vue') },
-    { path: '/hospital', component: () => import('@/view/Hospital/Hospital.vue') },
+    { path: '/hospital/:id', component: () => import('@/view/Hospital/Hospital.vue') },
   ],
   // 滚动 - 控制页面导航后显示顶部
   scrollBehavior() {

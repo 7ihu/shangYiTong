@@ -1,39 +1,37 @@
 <script setup lang="ts">
 import HomeHospital from '@/view/Home/components/HomeHospital/HomeHospital.vue'
 import { ref, onMounted } from 'vue'
-import { getLevelAPI } from '@/apis/home'
+import { getHomeLevelAPI } from '@/apis/home'
 
 // 点击选择等级、地址
-const activeChoice = ref(0)
-const activeAddress = ref(0)
+const activeChoice = ref('')
+const activeAddress = ref('')
 
 // 请求等级数据
 const levelChoiceList = ref<any>([])
 const levelAddressList = ref<any>([])
 
-const getLevel = async (data: string) => {
-  const { data: res } = await getLevelAPI(data)
+const getHomeLevel = async (data: string) => {
+  const { data: res } = await getHomeLevelAPI(data)
   if (data === 'HosType') return (levelChoiceList.value = res)
   return (levelAddressList.value = res)
 }
 
-// 请求地址数据
-
 // 选择等级事件
-const onClickChoice = (i: number) => {
+const onClickChoice = (i: string) => {
   activeChoice.value = i
 }
 // 选择地址事件
-const onClickAddress = (i: number) => {
+const onClickAddress = (i: string) => {
   activeAddress.value = i
 }
 onMounted(async () => {
-  await Promise.all([getLevel('HosType'), getLevel('Beijin')])
+  await Promise.all([getHomeLevel('HosType'), getHomeLevel('Beijin')])
 })
 </script>
 
 <template>
-  <div class="classification" v-if="levelChoiceList && levelAddressList">
+  <div class="classification" v-if="levelChoiceList.length && levelAddressList.length">
     <div class="hospitalInfo">
       <div>
         <h2>医院</h2>
@@ -41,20 +39,20 @@ onMounted(async () => {
       <div class="choice">
         <div>等级：</div>
         <ul class="grade">
-          <li :class="{ active: activeChoice === 0 }" @click="activeChoice = 0">全部</li>
+          <li :class="{ active: activeChoice === '' }" @click="activeChoice = ''">全部</li>
           <li v-for="item in levelChoiceList" :key="item.id" :class="{ active: activeChoice === item.value }" @click="onClickChoice(item.value)">{{ item.name }}</li>
         </ul>
       </div>
       <div class="address">
         <div>地区：</div>
         <ul class="grade">
-          <li :class="{ active: activeAddress === 0 }" @click="activeAddress = 0">全部</li>
+          <li :class="{ active: activeAddress === '' }" @click="activeAddress = ''">全部</li>
           <li v-for="item in levelAddressList" :key="item.id" :class="{ active: activeAddress === item.id }" @click="onClickAddress(item.id)">{{ item.name }}</li>
         </ul>
       </div>
     </div>
     <div>
-      <HomeHospital />
+      <HomeHospital :activeChoice="activeChoice" :activeAddress="activeAddress" />
     </div>
   </div>
 </template>

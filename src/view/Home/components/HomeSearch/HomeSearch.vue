@@ -1,11 +1,37 @@
 <script setup lang="ts">
 import { Search } from '@element-plus/icons-vue'
 import { ref } from 'vue'
-const searchValue = ref('')
-const querySearch = () => { }
-const handleSelect = (i: any) => {
-  console.log(i);
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { getHomeSearchAPI } from '@/apis/home'
 
+// 创建路由实例
+const router = useRouter()
+// 搜索值
+const searchValue = ref('')
+// 搜索时建议组件
+const querySearch = async (inputValue: string, cb?: any) => {
+  const { data: res } = await getHomeSearchAPI(inputValue)
+  if (!res.length && searchValue.value) {
+    ElMessage({ type: 'error', message: '输入错误' })
+    return setTimeout(() => elComplete.value.close(), 1000)
+  }
+  cb(
+    res.map((item: { hosname: string; hoscode: string }) => {
+      return {
+        value: item.hosname,
+        link: item.hoscode,
+      }
+    })
+  )
+}
+// 点击搜索建议栏事件
+const handleSelect = (data: { value: string; link: string }) => router.push({ path: `/hospital/${data.link}` })
+// 点击搜索按钮触发
+const elComplete = ref()
+const onClickSearch = () => {
+  searchValue.value = ''
+  alert('请输入搜索内容')
 }
 </script>
 
@@ -15,21 +41,18 @@ const handleSelect = (i: any) => {
       <el-icon size="18" color="gray">
         <Search />
       </el-icon>
-      <el-autocomplete v-model="searchValue" clearable class="inline-input w-50"
-        placeholder="点击搜索医院名称" :fetch-suggestions="querySearch" @select="handleSelect" />
-      <button class="btn">搜索</button>
+      <el-autocomplete v-model="searchValue" clearable class="inline-input w-50" placeholder="点击搜索医院名称" :fetch-suggestions="querySearch" :trigger-on-focus="false" @select="handleSelect" ref="elComplete" />
+      <button class="btn" @click="onClickSearch">搜索</button>
     </div>
-
   </div>
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .search {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-
 
   .search-input {
     display: flex;
