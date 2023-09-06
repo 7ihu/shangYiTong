@@ -10,7 +10,7 @@ const router = useRouter()
 // 搜索值
 const searchValue = ref('')
 // 搜索时建议组件
-const querySearch = async (inputValue: string, cb?: any) => {
+const querySearch = async (inputValue: string, cb: any) => {
   const { data: res } = await getHomeSearchAPI(inputValue)
   if (!res.length && searchValue.value) {
     ElMessage({ type: 'error', message: '输入错误' })
@@ -30,8 +30,8 @@ const handleSelect = (data: { value: string; link: string }) => router.push({ pa
 // 点击搜索按钮触发
 const elComplete = ref()
 const onClickSearch = () => {
-  searchValue.value = ''
-  alert('请输入搜索内容')
+  elComplete.value.focus()
+  searchValue.value += ''
 }
 </script>
 

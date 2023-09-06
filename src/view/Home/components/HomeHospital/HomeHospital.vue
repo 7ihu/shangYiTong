@@ -14,7 +14,7 @@ const props = defineProps<{
 // 当前页面值
 const pages = ref<pageAtt>({
   currentPage: 1,
-  pageSize: 10,
+  pageSize: 13,
   total: 20,
 })
 
@@ -137,7 +137,7 @@ onMounted(() => {
   .pages {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 30px;
     width: 100%;
   }
 }

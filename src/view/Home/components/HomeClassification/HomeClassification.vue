@@ -59,6 +59,7 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .classification {
+  margin-right: 30px;
   .hospitalInfo {
     display: flex;
     flex-direction: column;
