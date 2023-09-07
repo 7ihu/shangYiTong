@@ -38,8 +38,6 @@ const handleSizeChange = (i: number) => {
 watch(props, () => getHomeHospital(), { deep: true })
 // 创建路由实例
 const router = useRouter()
-// 点击医院跳转对应的医院页面详情
-const onClickPage = (i: string) => router.push({ path: `/hospital/${i}` })
 
 onMounted(() => {
   getHomeHospital()
@@ -49,7 +47,7 @@ onMounted(() => {
 <template>
   <div class="hospital" v-if="homeHospitalList.length">
     <div class="hospitalInfo">
-      <el-card class="box-card" v-for="item in homeHospitalList" :key="item.id" shadow="hover" @click="onClickPage(item.hoscode)">
+      <el-card class="box-card" v-for="item in homeHospitalList" :key="item.id" shadow="hover" @click="router.push(`/hospital/${item.hoscode}`)" :title="item.hosname">
         <div class="info">
           <h2>{{ item?.hosname }}</h2>
           <div class="detail">

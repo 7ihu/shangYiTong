@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { ArrowRight, Notification, MessageBox } from '@element-plus/icons-vue'
+
+const moreInfo = ref({
+  top: ['神经内科', '消化内科', '呼吸内科', '内科', '神经外科', '妇科', '产科', '儿科'],
+  container: ['关于延长北京大学国际医院放假的通知', '北京中医药大学东方医院部分科室医生门诊医', '武警总医院号源暂停更新通知'],
+  bottom: ['中国人民解放军总医院第六医学中心(原海军总医院)呼吸内科门诊停诊公告', '首都医科大学附属北京潞河医院老年医学科门诊停诊公告', '中日友好医院中西医结合心内科门诊停诊公告'],
+})
 </script>
 
 <template>
@@ -12,14 +19,7 @@ import { ArrowRight, Notification, MessageBox } from '@element-plus/icons-vue'
         </p>
       </div>
       <ul class="content">
-        <li>神经内科</li>
-        <li>消化内科</li>
-        <li>呼吸内科</li>
-        <li>内科</li>
-        <li>神经外科</li>
-        <li>妇科</li>
-        <li>产科</li>
-        <li>儿科</li>
+        <li v-for="item in moreInfo.top" :key="item" :title="item">{{ item }}</li>
       </ul>
     </div>
     <div class="container">
@@ -33,9 +33,7 @@ import { ArrowRight, Notification, MessageBox } from '@element-plus/icons-vue'
         </p>
       </div>
       <ul>
-        <li>关于延长北京大学国际医院放假的通知</li>
-        <li>北京中医药大学东方医院部分科室医生门诊医</li>
-        <li>武警总医院号源暂停更新通知</li>
+        <li v-for="item in moreInfo.container" :key="item" :title="item">{{ item }}</li>
       </ul>
     </div>
     <div class="bottom">
@@ -49,9 +47,7 @@ import { ArrowRight, Notification, MessageBox } from '@element-plus/icons-vue'
         </p>
       </div>
       <ul class="beforeli">
-        <li>中国人民解放军总医院第六医学中心(原海军总医院)呼吸内科门诊停诊公告</li>
-        <li>首都医科大学附属北京潞河医院老年医学科门诊停诊公告</li>
-        <li>中日友好医院中西医结合心内科门诊停诊公告</li>
+        <li v-for="item in moreInfo.bottom" :key="item" :title="item">{{ item }}</li>
       </ul>
     </div>
   </div>

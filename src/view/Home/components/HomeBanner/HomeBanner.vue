@@ -3,7 +3,7 @@
 
 <template>
   <div class="banner">
-    <el-carousel :interval="4000" type="card" height="240px">
+    <el-carousel :interval="4000" type="card" height="260px">
     <el-carousel-item v-for="item in 4" :key="item">
       <img src="@/assets/images/web-banner-1.png" alt="">
     </el-carousel-item>
@@ -16,6 +16,6 @@
   padding-top:15px;
 img {
   width: 600px;
-  height: 240px;
+  height: 260px;
 }}
 </style>
