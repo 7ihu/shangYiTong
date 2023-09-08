@@ -2,20 +2,24 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { Document, Calendar, Notification, Message, Search } from '@element-plus/icons-vue'
+import { useHospitalStore } from '@/store/hospital.ts'
 
 const route = useRoute()
 
 // 当前医院id
-const id = route.params.id
-// const hospitalInfo = ref()
+const id = <string>route.params.id
 
-console.log(route.fullPath)
+const hospitalStore = useHospitalStore()
+const windowHeight = ref(655)
 
-onMounted(() => {})
+onMounted(() => {
+  windowHeight.value = window.innerHeight - 120
+  hospitalStore.getHospital(id)
+})
 </script>
 
 <template>
-  <div class="hospital">
+  <div class="hospital" :style="`min-height:${windowHeight}px;`">
     <div class="left">
       <el-menu :default-active="route.fullPath" class="el-menu-vertical-demo" :router="true">
         <div class="breadcrumb">
@@ -42,7 +46,7 @@ onMounted(() => {})
         </el-menu-item>
         <el-menu-item :index="`/hospital/${id}/querycancel`">
           <el-icon><Search /></el-icon>
-          <span> 查询/取消</span>
+          <span>查询/取消</span>
         </el-menu-item>
       </el-menu>
     </div>
@@ -58,7 +62,7 @@ onMounted(() => {})
   justify-content: center;
   width: 1200px;
   margin: 0 auto;
-  padding-top: 30px;
+  padding-top: 25px;
   .left {
     flex: 1;
     .breadcrumb {
@@ -72,8 +76,10 @@ onMounted(() => {})
   }
   .right {
     flex: 4;
-    height: 800px;
-    background-color: pink;
+    margin: 25px 0 0 30px;
   }
+}
+:deep(.el-menu){
+  border: 0;
 }
 </style>
