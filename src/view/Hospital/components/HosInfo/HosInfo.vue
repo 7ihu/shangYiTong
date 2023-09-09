@@ -46,7 +46,7 @@ const hospitalStore = useHospitalStore()
       <p>{{ hospitalStore.hospitalInfo.hospital?.intro }}</p>
     </div>
   </div>
-  <HosRegistration />
+  <el-empty description="暂无数据" :image-size="300" v-else />
 </template>
 
 <style scoped lang="scss">
@@ -79,6 +79,7 @@ const hospitalStore = useHospitalStore()
       img {
         width: 80px;
         height: 80px;
+        border-radius: 50%;
       }
     }
     .right {
@@ -126,9 +127,9 @@ const hospitalStore = useHospitalStore()
     p {
       font-size: 14px;
       color: gray;
-      text-indent: 20px;
+      text-indent: 2rem;
       line-height: 2;
-      padding-left: 10px;
+      padding-left: 8px;
     }
   }
 }

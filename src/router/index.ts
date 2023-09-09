@@ -10,6 +10,7 @@ export default createRouter({
       component: () => import('@/view/Hospital/Hospital.vue'),
       children: [
         { path: '', component: () => import('@/view/Hospital/components/HosInfo/HosInfo.vue') },
+        { path: 'info', component: () => import('@/view/Hospital/components/HosInfo/HosInfo.vue') },
         { path: 'registration', component: () => import('@/view/Hospital/components/HosRegistration/HosRegistration.vue') },
         { path: 'notice', component: () => import('@/view/Hospital/components/HosNotice/HosNotice.vue') },
         { path: 'diagnosis', component: () => import('@/view/Hospital/components/HosDiagnosis/HosDiagnosis.vue') },

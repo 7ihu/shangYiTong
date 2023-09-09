@@ -1,25 +1,22 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { Document, Calendar, Notification, Message, Search } from '@element-plus/icons-vue'
 import { useHospitalStore } from '@/store/hospital.ts'
 
 const route = useRoute()
-
+const hospitalStore = useHospitalStore()
 // 当前医院id
 const id = <string>route.params.id
 
-const hospitalStore = useHospitalStore()
-const windowHeight = ref(655)
-
 onMounted(() => {
-  windowHeight.value = window.innerHeight - 120
   hospitalStore.getHospital(id)
+  hospitalStore.getHospitalDepartment(id)
 })
 </script>
 
 <template>
-  <div class="hospital" :style="`min-height:${windowHeight}px;`">
+  <div class="hospital">
     <div class="left">
       <el-menu :default-active="route.fullPath" class="el-menu-vertical-demo" :router="true">
         <div class="breadcrumb">
@@ -28,7 +25,7 @@ onMounted(() => {
             <el-breadcrumb-item>医院</el-breadcrumb-item>
           </el-breadcrumb>
         </div>
-        <el-menu-item :index="`/hospital/${id}`">
+        <el-menu-item :index="route.fullPath === `/hospital/${id}` ? `/hospital/${id}` : `/hospital/${id}/info`">
           <el-icon><document /></el-icon>
           <span>医院详情</span>
         </el-menu-item>
@@ -79,7 +76,7 @@ onMounted(() => {
     margin: 25px 0 0 30px;
   }
 }
-:deep(.el-menu){
+:deep(.el-menu) {
   border: 0;
 }
 </style>

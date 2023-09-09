@@ -1,6 +1,4 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="bottom">
@@ -21,6 +19,10 @@
 
 <style scoped lang="scss">
 .bottom {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -55,7 +57,7 @@
         height: 50px;
         line-height: 50px;
 
-        &:nth-child(n+1) {
+        &:nth-child(n + 1) {
           margin-left: 30px;
         }
 

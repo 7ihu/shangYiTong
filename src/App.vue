@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <HospitalTop />
@@ -12,6 +11,6 @@
 <style scoped lang="scss">
 .container {
   min-height: 500px;
-  margin-top: 70px;
+  margin: 70px 0 60px;
 }
 </style>
