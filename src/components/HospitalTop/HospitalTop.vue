@@ -1,5 +1,14 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { ArrowDown } from '@element-plus/icons-vue'
+import { useUserStore } from '@/store/user'
+const useUser = useUserStore()
 
+const router = useRouter()
+const onClear = () => {
+  useUser.clearUserInfo()
+  router.replace('/')
+}
 </script>
 
 <template>
@@ -7,13 +16,29 @@
     <div class="container">
       <div class="left">
         <a href="/">
-          <img src="../../assets/images/logo.png" alt="">
+          <img src="../../assets/images/logo.png" alt="" />
           <p>尚医通 &nbsp; 预约挂号同一平台</p>
         </a>
       </div>
-      <div class="right">
-        <p>帮助中心</p>
-        <p>登录/注册</p>
+      <div class="right" v-if="useUser">
+        <p @click="router.push('/')">帮助中心</p>
+        <el-dropdown v-if="useUser.userInfo.name" size="large">
+          <span class="el-dropdown-link">
+            {{ useUser.userInfo.name }}
+            <el-icon class="el-icon--right">
+              <arrow-down />
+            </el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>实名认证</el-dropdown-item>
+              <el-dropdown-item>挂号订单</el-dropdown-item>
+              <el-dropdown-item>就诊人管理</el-dropdown-item>
+              <el-dropdown-item divided @click="onClear">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+        <p @click="useUser.userStateChange(true)" v-else>账户登录</p>
       </div>
     </div>
   </div>
@@ -63,7 +88,6 @@
       cursor: pointer;
 
       p {
-
         &:nth-child(1) {
           margin-right: 15px;
         }
@@ -74,5 +98,11 @@
       }
     }
   }
+}
+:deep(.example-showcase .el-dropdown-link) {
+  cursor: pointer;
+  color: var(--el-color-primary);
+  display: flex;
+  align-items: center;
 }
 </style>

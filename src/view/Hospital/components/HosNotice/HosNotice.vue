@@ -39,6 +39,7 @@ const hospitalStore = useHospitalStore()
   display: flex;
   flex-direction: column;
   align-items: center;
+  letter-spacing: 2px;
   h1 {
     font-size: 30px;
     font-weight: 700;

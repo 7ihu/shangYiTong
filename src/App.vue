@@ -6,6 +6,7 @@
     <routerView />
   </div>
   <HospitalBottom />
+  <Login />
 </template>
 
 <style scoped lang="scss">

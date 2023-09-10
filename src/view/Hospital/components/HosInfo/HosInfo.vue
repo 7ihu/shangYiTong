@@ -51,6 +51,7 @@ const hospitalStore = useHospitalStore()
 
 <style scoped lang="scss">
 .hosinfo {
+  letter-spacing: 1px;
   padding-bottom: 50px;
   .top {
     display: flex;

@@ -16,7 +16,6 @@ export const useHospitalStore = defineStore('hospital', () => {
   const getHospitalDepartment = async (id: string) => {
     const { data: res } = await getHospitalDepartmentAPI(id)
     hospitalDepartment.value = res
-    console.log(hospitalDepartment.value)
   }
   return {
     hospitalInfo,

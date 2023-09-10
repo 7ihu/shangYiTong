@@ -62,6 +62,7 @@ onMounted(() => {
   padding-top: 25px;
   .left {
     flex: 1;
+    letter-spacing: 3px;
     .breadcrumb {
       padding-left: 22px;
       :deep(.el-breadcrumb) {

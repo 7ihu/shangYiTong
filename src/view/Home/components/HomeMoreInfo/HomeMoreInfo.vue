@@ -55,6 +55,7 @@ const moreInfo = ref({
 
 <style scoped lang="scss">
 .moreinfo {
+  letter-spacing: 1px;
   .top {
     margin-top: 20px;
     .title {

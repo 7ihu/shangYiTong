@@ -3,7 +3,7 @@
 import http from '@/utils/http.ts'
 
 /**
- * 获取当前医院基础数据
+ * @description 获取当前医院基础数据
  * @param hoscode 当前页面医院标识
  * @api   /hosp/hospital/
  * @returns
@@ -11,7 +11,7 @@ import http from '@/utils/http.ts'
 export const getHospitalAPI = (hoscode: string) => http.get(`/hosp/hospital/${hoscode}`)
 
 /**
- * 获取当前医院的科室
+ * @description 获取当前医院的科室
  * @param hoscode 当前页面医院标识
  * @api   /hosp/hospital/department/
  * @returns
