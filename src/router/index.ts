@@ -15,6 +15,21 @@ export default createRouter({
         { path: 'notice', component: () => import('@/view/Hospital/components/HosNotice/HosNotice.vue') },
         { path: 'diagnosis', component: () => import('@/view/Hospital/components/HosDiagnosis/HosDiagnosis.vue') },
         { path: 'querycancel', component: () => import('@/view/Hospital/components/HosQueryCancel/HosQueryCancel.vue') },
+        { path: 'department', component: () => import('@/view/Hospital/components/HosDepartment/HosDepartment.vue') },
+        { path: 'visitor', component: () => import('@/view/Hospital/components/HosVisitor/HosVisitor.vue') },
+      ],
+    },
+    {
+      path: '/user',
+      component: () => import('@/view/User/User.vue'),
+      children: [
+        { path: '', component: () => import('@/view/User/components/UserRealName/UserRealName.vue') },
+        { path: 'realname', component: () => import('@/view/User/components/UserRealName/UserRealName.vue') },
+        { path: 'order', component: () => import('@/view/User/components/UserOrder/UserOrder.vue') },
+        { path: 'info', component: () => import('@/view/User/components/UserInfo/UserInfo.vue') },
+        { path: 'account', component: () => import('@/view/User/components/UserAccount/UserAccount.vue') },
+        { path: 'feedback', component: () => import('@/view/User/components/UserFeedback/UserFeedback.vue') },
+        { path: 'add', component: () => import('@/view/User/components/UserAddInfo/UserAddInfo.vue') },
       ],
     },
     {

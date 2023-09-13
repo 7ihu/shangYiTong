@@ -23,7 +23,7 @@ const onClear = () => {
       <div class="right" v-if="useUser">
         <p @click="router.push('/')">帮助中心</p>
         <el-dropdown v-if="useUser.userInfo.name" size="large">
-          <span class="el-dropdown-link">
+          <span class="el-dropdown-link" @click="router.push('/user')">
             {{ useUser.userInfo.name }}
             <el-icon class="el-icon--right">
               <arrow-down />
@@ -31,9 +31,9 @@ const onClear = () => {
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>实名认证</el-dropdown-item>
-              <el-dropdown-item>挂号订单</el-dropdown-item>
-              <el-dropdown-item>就诊人管理</el-dropdown-item>
+              <el-dropdown-item @click="router.push('/user/realname')">实名认证</el-dropdown-item>
+              <el-dropdown-item @click="router.push('/user/order')">挂号订单</el-dropdown-item>
+              <el-dropdown-item @click="router.push('/user/info')">就诊人管理</el-dropdown-item>
               <el-dropdown-item divided @click="onClear">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>

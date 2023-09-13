@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 //引入医院详情仓库的数据
 import { useHospitalStore } from '@/store/hospital.ts'
-import { useUserStore } from '@/store/user';
+import { useUserStore } from '@/store/user'
 const hospitalStore = useHospitalStore()
 const userStore = useUserStore()
 
@@ -28,11 +29,18 @@ const onActiveliIndex = (item: { depcode: string; depname: string }) => {
   selectDepartment.value.right = item.depname
 }
 
+const router = useRouter()
 // 点击预约门诊
 const onDiagnosis = () => {
   if (selectDepartment.value.left === '' || selectDepartment.value.right === '') return ElMessage({ type: 'warning', message: '请先选择科室' })
-  if (!userStore.userInfo.token) return ElMessage({ type: 'warning', message: '请先登录' })
-
+  if (!userStore.userInfo.token) {
+    ElMessage({ type: 'warning', message: '请先登录' })
+    setTimeout(() => {
+      userStore.userStateChange(true)
+    }, 500)
+    return
+  }
+  router.push(`department?depcode=${activeliIndex.value}`)
 }
 </script>
 
