@@ -38,17 +38,17 @@ const verification = async () => {
   if (timerState.value) return
   timerState.value = true
   useUser.getPhoneCode(formLabelAlign.value.user)
-  timer = setInterval(() => {
-    if (time === 0 || !useUser.userState) {
-      textState.value = '重新发送'
-      time = 60
-      useUser.clearPhoneCode()
-      timerState.value = false
-      return clearInterval(timer)
-    }
-    time--
-    time > 9 ? (textState.value = time + 's') : time < 1 ? (textState.value = time + 's') : (textState.value = '0' + time + 's')
-  }, 1000)
+    timer = setInterval(() => {
+      if (time === 0 || !useUser.userState) {
+        textState.value = '重新发送'
+        time = 60
+        useUser.clearPhoneCode()
+        timerState.value = false
+        return clearInterval(timer)
+      }
+      time--
+      time > 9 ? (textState.value = time + 's') : time < 1 ? (textState.value = time + 's') : (textState.value = '0' + time + 's')
+    }, 1000)
 }
 const ruleFormRef = ref()
 const submitForm = (formEl: any) => {

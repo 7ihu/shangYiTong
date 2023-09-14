@@ -2,24 +2,24 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getPatientAPI, getScheduleIdAPI } from '@/apis/hospital'
+import { getOrderIdAPI } from '@/apis/user'
 import { Warning, User, Eleme } from '@element-plus/icons-vue'
 
 const route = useRoute()
 const router = useRouter()
 
 const flag = ref(true)
-const submit = () => {
+const submit = async () => {
   flag.value = false
-  setTimeout(() => {
-    router.push(`/user/order?order=${1}`)
-  }, 3000)
+  const res = await getOrderIdAPI(route.params.id as string, route.query.doctor as string, nowRegInfo.value.id)
+  console.log(res)
+  router.push(`/user/order?order=${9463}`)
 }
 
 // 获取当前账号就诊人信息
 const regInfo = ref()
 const getPatient = async () => {
   const res = await getPatientAPI()
-  console.log(res)
   regInfo.value = res.data
 }
 // 获取当前挂号医生信息
@@ -71,7 +71,7 @@ onMounted(() => {
       <div class="visit">
         <div>
           <div></div>
-          <h2>选择就诊卡</h2>
+          <h2>就诊卡信息</h2>
           <span>
             <el-icon size="15"><Warning /></el-icon>
             <i>如您持社保卡就诊，请务必选择医保预约挂号，以保证正常医保报销。</i>
@@ -81,7 +81,7 @@ onMounted(() => {
       <div class="visit-info" v-if="nowRegInfo">
         <el-row :gutter="1" justify="start" align="middle">
           <el-col :span="7" class="el-col">
-            <el-card class="box-card" shadow="hover"  >
+            <el-card class="box-card" shadow="hover">
               <template #header>
                 <div class="card-header">
                   <span>{{ nowRegInfo!.name }}</span>

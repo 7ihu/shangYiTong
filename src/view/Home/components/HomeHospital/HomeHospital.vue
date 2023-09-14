@@ -14,7 +14,7 @@ const props = defineProps<{
 // 当前页面值
 const pages = ref<pageAtt>({
   currentPage: 1,
-  pageSize: 13,
+  pageSize: 10,
   total: 20,
 })
 
