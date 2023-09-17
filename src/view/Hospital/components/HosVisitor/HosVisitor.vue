@@ -12,8 +12,7 @@ const flag = ref(true)
 const submit = async () => {
   flag.value = false
   const res = await getOrderIdAPI(route.params.id as string, route.query.doctor as string, nowRegInfo.value.id)
-  console.log(res)
-  router.push(`/user/order?order=${9463}`)
+  router.push(`/user/order?order=${res.data||9519}`)
 }
 
 // 获取当前账号就诊人信息
@@ -135,8 +134,7 @@ onMounted(() => {
       <div class="info" v-else>请先选择就诊人</div>
     </div>
     <div class="btn" v-if="nowRegInfo">
-      <el-button type="primary" v-if="flag" @click="submit">确认挂号</el-button>
-      <el-button type="primary" :loading-icon="Eleme" loading v-else>正在提交</el-button>
+      <el-button type="primary" :loading-icon="!flag ? Eleme : ''" :loading="!flag" @click="submit">确认挂号</el-button>
     </div>
   </div>
 </template>

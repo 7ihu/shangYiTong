@@ -39,7 +39,13 @@ const onDiagnosis = () => {
       userStore.userStateChange(true)
     }, 500)
     return
+  } else if (!userStore.realInfo) {
+    setTimeout(() => {
+      router.push('/user/realname')
+    }, 500)
+    return
   }
+
   router.push(`department?depcode=${activeliIndex.value}`)
 }
 </script>

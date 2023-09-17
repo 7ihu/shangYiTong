@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue'
 import { ElMessage } from 'element-plus'
-// import { useRouter } from 'vue-router'
 import { useUserStore } from '@/store/user'
 import { getDictCodeAPI, getUserAuahAPI } from '@/apis/user'
 import { WarnTriangleFilled, Plus, Eleme } from '@element-plus/icons-vue'
 
-// const router = useRouter()
 const userStore = useUserStore()
 
 const formRef = ref()
@@ -114,10 +112,10 @@ const num = ref()
       <el-form ref="formRef" :model="form" :rules="rules" label-width="100px" class="demo-ruleForm" size="large" label-position="top" status-icon>
         <div class="form" v-if="step === 1">
           <el-form-item label="用户姓名" prop="name" class="item">
-            <el-input v-model.trim="form.name" type="text" />
+            <el-input v-model.trim="form.name" type="text" placeholder="请输入姓名"/>
           </el-form-item>
           <el-form-item label="证件号码" prop="id">
-            <el-input v-model.trim="num" type="number" />
+            <el-input v-model.trim="num" type="number" placeholder="请输入证件号码"/>
           </el-form-item>
         </div>
         <div class="upload" v-if="step === 2">
@@ -138,7 +136,7 @@ const num = ref()
           </el-form-item>
         </div>
         <div class="info" v-if="step === 3">
-          <el-descriptions :column="1" class="des-info" border>
+          <el-descriptions :column="1" border>
             <el-descriptions-item label="用户姓名：">{{ userStore.realInfo?.name }}</el-descriptions-item>
             <el-descriptions-item label="证件类型：">{{ userStore.realInfo?.certificatesType * 1 === 10 ? '身份证' : '户口本' }}</el-descriptions-item>
             <el-descriptions-item label="证件号码：">{{ userStore.realInfo?.certificatesNo }}</el-descriptions-item>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import { getPatientAPI } from '@/apis/hospital'
 
 const router = useRouter()
@@ -9,6 +10,30 @@ const regInfo = ref()
 const getPatient = async () => {
   const res = await getPatientAPI()
   regInfo.value = res.data
+}
+// 点击查看详情
+const drawer = ref(false)
+const itemInfo = ref()
+const visitDetails = (item: any) => {
+  console.log(item)
+  itemInfo.value = item
+  drawer.value = true
+}
+// 关闭详情
+const handleClose = (done: () => void) => {
+  ElMessageBox.confirm('是否关闭就诊详情?')
+    .then(() => {
+      done()
+      ElMessage({ type: 'success', message: '已关闭' })
+    })
+    .catch((e) => {
+      ElMessage({ type: 'warning', message: e === 'cancel' ? '已取消' : e })
+    })
+}
+// 删除就诊人
+const deleteClick = () => {
+  itemInfo.value = ''
+  drawer.value = false
 }
 
 onMounted(() => getPatient())
@@ -28,8 +53,8 @@ onMounted(() => getPatient())
                   <span>{{ item.sex === 0 ? '女' : '男' }} </span>
                   <span>{{ item.param.certificatesTypeString }}</span>
                 </div>
-                <span>卡号：{{ item.userId }}</span>
-                <div>
+                <span>就诊ID：{{ item.id }}</span>
+                <div @click="visitDetails(item)">
                   <p>查看详情&gt;</p>
                 </div>
               </div>
@@ -45,17 +70,46 @@ onMounted(() => getPatient())
       <el-row align="middle">
         <el-col :span="24" class="el-col">
           <el-card class="box-card" shadow="hover">
-            <div class="add" @click="router.push('/user/add')">+ 添加就诊人</div>
+            <div class="add" @click="router.push('/user/addinfo')">+ 添加就诊人</div>
           </el-card>
         </el-col>
       </el-row>
     </div>
+    <el-drawer v-model="drawer" :before-close="handleClose">
+      <template #header>
+        <h4>就诊人详情</h4>
+      </template>
+      <template #default>
+        <div v-if="itemInfo">
+          <el-descriptions :column="1"  border size="large">
+            <el-descriptions-item label="姓名：">{{ itemInfo.name }}</el-descriptions-item>
+            <el-descriptions-item label="性别：">{{ itemInfo.sex === 0 ? '女' : '男' }}</el-descriptions-item>
+            <el-descriptions-item label="账户ID：">{{ itemInfo.userId }}</el-descriptions-item>
+            <el-descriptions-item label="就诊ID：">{{ itemInfo.id }}</el-descriptions-item>
+            <el-descriptions-item label="自费/医保：">{{ itemInfo.isInsure === 0 ? '自费' : '医保' }}</el-descriptions-item>
+            <el-descriptions-item label="实名证件：">{{ itemInfo.param.certificatesTypeString }}</el-descriptions-item>
+            <el-descriptions-item label="出生日期：">{{ itemInfo.birthdate }}</el-descriptions-item>
+            <el-descriptions-item label="证件号码：">{{ itemInfo.certificatesNo }} </el-descriptions-item>
+            <el-descriptions-item label="手机号码：">{{ itemInfo.phone }}</el-descriptions-item>
+            <el-descriptions-item label="家庭住址：">{{ itemInfo.param.fullAddress }}</el-descriptions-item>
+            <el-descriptions-item label="紧急联系人姓名：">{{ itemInfo.contactsName || '无' }}</el-descriptions-item>
+            <el-descriptions-item label="紧急联系人手机号：">{{ itemInfo.contactsPhone || '无' }}</el-descriptions-item>
+          </el-descriptions>
+        </div>
+      </template>
+      <template #footer>
+        <div style="flex: auto">
+          <el-button type="danger" size="large" plain @click="deleteClick">删除就诊人</el-button>
+          <el-button type="primary" size="large" plain>修改就诊人</el-button>
+        </div>
+      </template>
+    </el-drawer>
   </div>
 </template>
 
 <style scoped lang="scss">
 .info {
-  h2{
+  h2 {
     font-weight: 600;
   }
   .visit-info {
@@ -112,5 +166,14 @@ onMounted(() => getPatient())
   color: #4990f1;
   width: 100%;
   font-weight: 600;
+}
+
+.aaa{
+  td{
+    &:first-child{
+      background-color:pink !important;
+    }
+  }
+  
 }
 </style>

@@ -8,7 +8,7 @@ export const useUserStore = defineStore('user', () => {
   const userState = ref(false)
   const userInfo = ref(JSON.parse(localStorage.getItem('userInfo') as string) || {})
   const phoneCode = ref('')
-  const realInfo = ref()
+  const realInfo = ref(JSON.parse(localStorage.getItem('realInfo') as string) || {})
 
   const userStateChange = (i: boolean) => {
     userState.value = i
@@ -42,7 +42,10 @@ export const useUserStore = defineStore('user', () => {
   // 获取用户实名信息
   const getRealInfo = async () => {
     const res = await getUserInfoAPI()
-    if (res.data.name && res.data.certificatesNo) return (realInfo.value = res.data)
+    if (res.data.name && res.data.certificatesNo) {
+      realInfo.value = res.data
+      return localStorage.setItem('realInfo', JSON.stringify(realInfo.value))
+    }
     return ElMessage({ type: 'error', message: '当前账户未实名' })
   }
   // 清除用户实名信息

@@ -29,7 +29,7 @@ export default createRouter({
         { path: 'info', component: () => import('@/view/User/components/UserInfo/UserInfo.vue') },
         { path: 'account', component: () => import('@/view/User/components/UserAccount/UserAccount.vue') },
         { path: 'feedback', component: () => import('@/view/User/components/UserFeedback/UserFeedback.vue') },
-        { path: 'add', component: () => import('@/view/User/components/UserAddInfo/UserAddInfo.vue') },
+        { path: 'addinfo', component: () => import('@/view/User/components/UserAddInfo/UserAddInfo.vue') },
       ],
     },
     {
