@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getPatientAPI, getScheduleIdAPI } from '@/apis/hospital'
 import { getOrderIdAPI } from '@/apis/user'
-import { Warning, User, Eleme } from '@element-plus/icons-vue'
+import { Warning, User, Eleme, Edit } from '@element-plus/icons-vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -11,8 +11,9 @@ const router = useRouter()
 const flag = ref(true)
 const submit = async () => {
   flag.value = false
-  const res = await getOrderIdAPI(route.params.id as string, route.query.doctor as string, nowRegInfo.value.id)
-  router.push(`/user/order?order=${res.data||9519}`)
+  router.push(`/user/order?order=${9519}`)
+  const res: any = await getOrderIdAPI(route.params.id as string, route.query.doctor as string, nowRegInfo.value.id)
+  if (res.code === 200) return router.push(`/user/order?order=${res.data}`)
 }
 
 // 获取当前账号就诊人信息
@@ -47,7 +48,7 @@ onMounted(() => {
           <div></div>
           <h2>选择就诊人</h2>
         </div>
-        <p @click="router.push('/user/info')">
+        <p @click="router.push('/user/addinfo')">
           <el-icon size="14"><User /></el-icon>
           <span>添加就诊人</span>
         </p>
@@ -60,6 +61,7 @@ onMounted(() => {
               <h2>{{ item.name }}</h2>
               <p>{{ item.param.fullAddress }}</p>
               <p>{{ item.certificatesNo }}</p>
+              <el-button type="primary" size="small" :icon="Edit" :disabled="nowRegInfo !== item" @click="router.push('/user/addinfo?id=' + item.id)" />
             </el-card>
           </el-col>
         </el-row>
@@ -148,18 +150,29 @@ onMounted(() => {
   }
   .people {
     .people-content {
-      padding: 0 20px;
       margin: 30px 0;
       .el-col {
         margin: 0 18px;
         padding-bottom: 20px;
       }
       .box-card {
+        position: relative;
         font-size: 12px;
-        border: 1px solid #ccc;
-        h2 {
-          font-size: 16px;
+        button {
+          position: absolute;
+          top: 10px;
+          right: 8px;
+          z-index: 1;
+          &:hover {
+            font-size: 13px;
+            background-color: #1287ff;
+            box-shadow: var(--el-box-shadow);
+          }
         }
+        h2 {
+          font-size: 18px;
+        }
+
         p {
           padding-top: 10px;
         }
@@ -294,6 +307,8 @@ onMounted(() => {
 .active {
   font-weight: 600;
   color: #fff;
-  background-color: #4990f1;
+  border: 1px dashed #1287ff;
+  background-color: #67c23a;
+  box-shadow: var(--el-box-shadow-lighter);
 }
 </style>

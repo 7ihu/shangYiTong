@@ -92,3 +92,38 @@ export const getfindAllAPI = () => http.get(`/user/patient/auth/findAll`)
  * @returns
  */
 export const getStatusListAPI = () => http.get(`/order/orderInfo/auth/getStatusList`)
+
+/**
+ * @description 请求城市的地址
+ * @param parentId 请求城市的标识符
+ * @api /cmn/dict/findByParentId/
+ * @returns
+ */
+export const getCityAddressAPI = (parentId: string) => http.get(`cmn/dict/findByParentId/${parentId}`)
+
+/**
+ * @description 新增/修改 就诊人信息
+ * @param data 输入的就诊人信息
+ * @api /user/patient/auth/save 新增
+ * @api /user/patient/auth/update 修改
+ * @returns
+ */
+export const getAddUpdateAPI = (data:any) => {
+  if (data.id) return http.put(`/user/patient/auth/update`, data)
+  return http.post(`/user/patient/auth/save`, data)
+} 
+
+/**
+ * @description 删除当前就诊人
+ * @param id 就诊人标识符
+ * @api /api/user/patient/auth/remove/
+ */
+export const getRemoveUserAPI = (id:string)=> http.delete(`/user/patient/auth/remove/${id}`)
+
+/**
+ * @description 获取当前就诊人信息
+ * @param id 就诊人标识符
+ * @api GET /api/user/patient/auth/get/{id
+ * @returns
+ */
+export const getInfoAPI = (id:string)=> http.get(`/user/patient/auth/get/${id}`)

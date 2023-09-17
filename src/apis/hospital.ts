@@ -39,7 +39,7 @@ export const getBookingScheduleRuleAPI = (page: number, limit: number, hoscode: 
 export const getfindScheduleListAPI = (hoscode: string, depcode: string, workDate: string) => http.get(`/hosp/hospital/auth/findScheduleList/${hoscode}/${depcode}/${workDate}`)
 
 /**
- * @param
+ * @description 获取就诊人信息
  * @api /user/patient/auth/findAl
  */
 export const getPatientAPI = () => http.get(`/user/patient/auth/findAll`)

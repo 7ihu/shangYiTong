@@ -15,8 +15,20 @@ export default createRouter({
         { path: 'notice', component: () => import('@/view/Hospital/components/HosNotice/HosNotice.vue') },
         { path: 'diagnosis', component: () => import('@/view/Hospital/components/HosDiagnosis/HosDiagnosis.vue') },
         { path: 'querycancel', component: () => import('@/view/Hospital/components/HosQueryCancel/HosQueryCancel.vue') },
-        { path: 'department', component: () => import('@/view/Hospital/components/HosDepartment/HosDepartment.vue') },
-        { path: 'visitor', component: () => import('@/view/Hospital/components/HosVisitor/HosVisitor.vue') },
+        {
+          path: 'department',
+          component: () => import('@/view/Hospital/components/HosDepartment/HosDepartment.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'visitor',
+          component: () => import('@/view/Hospital/components/HosVisitor/HosVisitor.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
       ],
     },
     {

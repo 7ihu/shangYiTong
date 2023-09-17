@@ -26,7 +26,7 @@ http.interceptors.response.use(
   },
   (err) => {
     ElMessage({ type: 'error', message: err.message })
-    return err
+    return Promise.reject(err)
   }
 )
 

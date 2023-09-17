@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { getPatientAPI } from '@/apis/hospital'
+import { getRemoveUserAPI } from '@/apis/user'
 
 const router = useRouter()
 
@@ -15,7 +16,6 @@ const getPatient = async () => {
 const drawer = ref(false)
 const itemInfo = ref()
 const visitDetails = (item: any) => {
-  console.log(item)
   itemInfo.value = item
   drawer.value = true
 }
@@ -31,10 +31,14 @@ const handleClose = (done: () => void) => {
     })
 }
 // 删除就诊人
-const deleteClick = () => {
-  itemInfo.value = ''
+const confirmEvent = async () => {
+  const res = await getRemoveUserAPI(itemInfo.value.id)
+  getPatient()
   drawer.value = false
+  if (res.data) return ElMessage({ type: 'success', message: '已删除' })
 }
+// 更改就诊人
+const getUpdateUser = () => router.push('/user/addinfo?id=' + itemInfo.value.id)
 
 onMounted(() => getPatient())
 </script>
@@ -81,7 +85,7 @@ onMounted(() => getPatient())
       </template>
       <template #default>
         <div v-if="itemInfo">
-          <el-descriptions :column="1"  border size="large">
+          <el-descriptions :column="1" border size="large">
             <el-descriptions-item label="姓名：">{{ itemInfo.name }}</el-descriptions-item>
             <el-descriptions-item label="性别：">{{ itemInfo.sex === 0 ? '女' : '男' }}</el-descriptions-item>
             <el-descriptions-item label="账户ID：">{{ itemInfo.userId }}</el-descriptions-item>
@@ -99,8 +103,13 @@ onMounted(() => getPatient())
       </template>
       <template #footer>
         <div style="flex: auto">
-          <el-button type="danger" size="large" plain @click="deleteClick">删除就诊人</el-button>
-          <el-button type="primary" size="large" plain>修改就诊人</el-button>
+          <el-popconfirm title="是否删除就诊人?" @confirm="confirmEvent">
+            <template #reference>
+              <el-button type="danger" size="large" plain>删除就诊人</el-button>
+            </template>
+          </el-popconfirm>
+
+          <el-button type="primary" size="large" plain @click="getUpdateUser">修改就诊人</el-button>
         </div>
       </template>
     </el-drawer>
@@ -168,12 +177,11 @@ onMounted(() => getPatient())
   font-weight: 600;
 }
 
-.aaa{
-  td{
-    &:first-child{
-      background-color:pink !important;
+.aaa {
+  td {
+    &:first-child {
+      background-color: pink !important;
     }
   }
-  
 }
 </style>
