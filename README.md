@@ -17,11 +17,12 @@
 7. 文件上传接口：http://139.198.34.216:8205/swagger-ui.html
 8. 后台用户接口：http://139.198.34.216:8212/swagger-ui.html
 
-### 未登录可以访问的路由
+### 未登录不许访问的路由
 
-- /home
-- /hospital/register
-- /hospital/detail
-- /hospital/notice
-- /hospital/close
-- /hospital/search
+- /user
+- /user/info
+- /user/realname
+- /user/account
+- /user/order
+- /user/feedback
+- /user/addinfo
